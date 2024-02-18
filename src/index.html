@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -8,38 +8,70 @@
     <title>La liga</title>
   </head>
   <body>
+    <div class="background">
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
     <div class="container hide">
       <div class="intro">
-        <h1>Bienvenido a nuestra página</h1>
+        <h1>Bienvenido!</h1>
         <p>Crea tu equipo favorito de la Liga Española</p>
-        <p>En este formulario no hace falta que estés registrado, es solamente <br> para poder hacer las validaciones de los dos inputs.</p>
-
+        <p>
+          En este formulario no hace falta que estés registrado, es solamente
+          <br />
+          para poder hacer las validaciones de los dos inputs.
+        </p>
       </div>
-      <div id="registro" class="">
-        <h2>Acceso del Usuario</h2>
-        <form action="">
-          <!-- <div class="form-group">
-            <input
-              type="text"
-              class="input"
-              name="name"
-              id="name"
-              placeholder="Name"
-            />
-          </div> -->
 
+      <div id="registro" class="">
+        <form action="" id="loginForm">
+          <h2>Acceso del Usuario</h2>
+          <label for="email">Correo Electrónico</label>
           <div class="form-group">
             <input
               type="email"
               class="input"
               name="email"
               id="email"
-              placeholder="Correo Electrónico"
+              placeholder="test@gmail.com"
               required
             />
           </div>
 
           <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input
+              type="password"
+              class="input"
+              name="password"
+              id="passwordInput"
+              placeholder="Contraseña"
+              required
+            />
+          </div>
+
+          <button id="loginSubmit" class="login">Acceso</button> <br />
+          <br />
+          <br />
+          <p id="registerBtn">¿No tienes cuenta? <span>Registrate</span></p>
+        </form>
+
+        <form id="registerForm" style="display: none">
+          <h3>Register Here</h3>
+          <label for="email">Correo Electrónico</label>
+          <div class="form-group">
+            <input
+              type="email"
+              class="input"
+              name="email"
+              id="emailInput"
+              placeholder="test@gmail.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Contraseña</label>
             <input
               type="password"
               class="input"
@@ -50,15 +82,19 @@
             />
           </div>
 
-          <button type="submit" class="submit-button">Login</button>
+          <button id="registerSubmit" class="register">Registrar</button> <br />
+          <br />
+          <br />
+          <p id="loginBtn">¿Ya tienes cuenta? <span>Iniciar sesión</span></p>
         </form>
-        <h1 id="registroErrorMessage"></h1>
+
+        <h2 id="registroErrorMessage"></h2>
       </div>
     </div>
 
     <div id="result"></div>
     <div id="equipos" class="hide">
-      <h1>Selecciona un equipo y ver información de jugadores</h1>
+      <h2>Selecciona un equipo y ver información de jugadores</h2>
       <div class="infoPlayer">
         <div class="columna">
           <h2>Equipos</h2>

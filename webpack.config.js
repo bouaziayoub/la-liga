@@ -21,7 +21,11 @@ module.exports = {
                 use: {
                     loader: 'babel-loader'
                 }
-            }
+            },
+            {
+                test: /\.json$/,  // Esta regla aplicará a los archivos JSON
+                loader: 'json-loader'  // Utiliza el loader json-loader para cargar los archivos JSON
+              }
         ]
     },
     devServer: {
