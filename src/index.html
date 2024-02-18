@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <title>La liga</title>
+  </head>
+  <body>
+    <div class="container hide">
+      <div class="intro">
+        <h1>Bienvenido a nuestra página</h1>
+        <p>Crea tu equipo favorito de la Liga Española</p>
+        <p>En este formulario no hace falta que estés registrado, es solamente <br> para poder hacer las validaciones de los dos inputs.</p>
+
+      </div>
+      <div id="registro" class="">
+        <h2>Acceso del Usuario</h2>
+        <form action="">
+          <!-- <div class="form-group">
+            <input
+              type="text"
+              class="input"
+              name="name"
+              id="name"
+              placeholder="Name"
+            />
+          </div> -->
+
+          <div class="form-group">
+            <input
+              type="email"
+              class="input"
+              name="email"
+              id="email"
+              placeholder="Correo Electrónico"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="password"
+              class="input"
+              name="password"
+              id="password"
+              placeholder="Contraseña"
+              required
+            />
+          </div>
+
+          <button type="submit" class="submit-button">Login</button>
+        </form>
+        <h1 id="registroErrorMessage"></h1>
+      </div>
+    </div>
+
+    <div id="result"></div>
+    <div id="equipos" class="hide">
+      <h1>Selecciona un equipo y ver información de jugadores</h1>
+      <div class="infoPlayer">
+        <div class="columna">
+          <h2>Equipos</h2>
+          <ul></ul>
+        </div>
+        <div class="columna">
+          <h2>Jugadores</h2>
+          <ul></ul>
+        </div>
+        <div class="columna">
+          <h2>Información</h2>
+          <ul></ul>
+        </div>
+      </div>
+    </div>
+    <div id="miEquipo" class="hide"></div>
+  </body>
+</html>
