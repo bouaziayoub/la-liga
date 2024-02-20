@@ -1,72 +1,90 @@
-
-import { Pantalla } from '../Pantalla';
-import { createUser } from './api';
-import { validateInput } from './validator';
+import { Pantalla } from "../Pantalla";
+import { createUser } from "./api";
+import { validateInput } from "./validator";
 
 export class PantallaRegistro extends Pantalla {
-    constructor(pantallaRegistro) {
-        super(pantallaRegistro);
-      
-        this.formulario = this.pantalla.querySelector('form');
-        this.registroErrorMessage = this.pantalla.querySelector('#registroErrorMessage');
-        this.createdUser = this.registerSubmit();
-        this.registerValidation();
-    }
+  constructor(pantallaRegistro) {
+    super(pantallaRegistro);
 
-    getCreatedUser() {
-        return this.createdUser;
-    }
+    this.formulario = this.pantalla.querySelector("form");
+    this.registroErrorMessage = this.pantalla.querySelector(
+      "#registroErrorMessage"
+    );
+    this.createdUser = this.registerSubmit();
+    this.registerValidation();
+  }
 
-    showErrorMessage(message) {
-        this.registroErrorMessage.innerText = message;
-    }
+  getCreatedUser() {
+    return this.createdUser;
+  }
 
-    registerValidation() {
+  showErrorMessage(message) {
+    this.registroErrorMessage.innerText = message;
+  }
+
+  registerValidation() {
+    const elements = this.formulario.elements;
+
+    const eventos = ["keypress", "blur"];
+
+    [...elements]
+      .filter((element) => element.nodeName === "INPUT")
+      .forEach((input) => {
+        eventos.forEach((evento) => {
+          input.addEventListener(evento, (event) => {
+            if (evento === "keypress" && event.key === "Enter") {
+              event.preventDefault();
+            }
+
+            const input = event.target;
+            const isInputValid = validateInput(input);
+
+            if (!isInputValid && input.value !== "") {
+              input.classList.add("formularioIncorrecto");
+              input.classList.remove("formularioCorrecto");
+            } else {
+              input.classList.add("formularioCorrecto");
+              input.classList.remove("formularioIncorrecto");
+            }
+
+            if (input.value === "") {
+              input.classList.remove("formularioCorrecto");
+              input.classList.remove("formularioIncorrecto");
+            }
+          });
+        });
+      });
+  }
+
+  registerSubmit() {
+    return new Promise((resolve) => {
+      this.formulario.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        //Recuperar campos formulario
+        const user = {};
+
         const elements = this.formulario.elements;
 
-        [...elements].filter(element => element.nodeName === 'INPUT').forEach(input => {
-            input.addEventListener('change', (event) => {
-                const input = event.target;
-                const isInputValid = validateInput(input);
+        [...elements]
+          .filter((element) => element.nodeName === "INPUT")
+          .forEach((input) => {
+            user[input.name] = input.value;
+          });
 
-                if (!isInputValid && input.value !== '') {
-                    input.classList.add('formularioIncorrecto');
-                    input.classList.remove('formularioCorrecto');
-                } else {
-                    input.classList.add('formularioCorrecto');
-                    input.classList.remove('formularioIncorrecto');
-                }
-            });
-        });
-    }
+        // Crear usuario
+        const response = await createUser(user);
 
-    registerSubmit() {
-        return new Promise(resolve => {
-            this.formulario.addEventListener('submit', async(event) => {
-                event.preventDefault();
-    
-                //Recuperar campos formulario
-                const user = {};
-    
-                const elements = this.formulario.elements;
-    
-                [...elements].filter(element => element.nodeName === 'INPUT').forEach(input => {
-                    user[input.name] = input.value;
-                });
-            
-                // Crear usuario
-                const response = await createUser(user);
-    
-                if (response.success) {
-                    resolve(response.data);
-                } else {
-                    this.showErrorMessage(response.data);
-                }
-            });
-        });
-    }
+        if (response.success) {
+          resolve(response.data);
+        } else {
+          this.showErrorMessage(response.data);
+        }
+      });
+    });
+  }
 
-    getSesionStorage(){
-        sessionStorage.getItem('');
-    }
+  getSesionStorage() {
+    sessionStorage.getItem("");
+  }
 }

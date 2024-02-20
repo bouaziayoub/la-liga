@@ -40,60 +40,75 @@ async function initApp() {
 
     loginSubmit.addEventListener("click", login);
 
-    registerSubmit.addEventListener("click", register);
+    // registerSubmit.addEventListener("click", register);
 
-    // function login() {
-    //   var email = document.getElementById("email").value;
-    //   var password = document.getElementById("password").value;
-    //   console.log(dataUsers);
-    //   // Cargar usuarios desde el archivo JSON
-    //   fetch(dataUsers)
-    //     .then((response) => response.json())
-    //     .then((users) => {
-    //       // Verificar las credenciales
-    //       var user = users.find(
-    //         (u) => u.email === email && u.password === password
-    //       );
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      console.log(email, password);
+      const user = dataUsers.find(
+        (u) => u.email === email && u.password === password
+      );
 
-    //       if (user) {
-    //         alert("Inicio de sesión exitoso");
-    //       } else {
-    //         alert("Nombre de usuario o contraseña incorrectos");
-    //       }
-    //     })
-    //     .catch((error) => console.error("Error al cargar usuarios:", error));
-    // }
+      if (user) {
+        // alert("Inicio de sesión exitoso");
+        // Una vez Logrado, mostrar la pantalla de equipos
+        pantallaRegistro.getCreatedUser().then((registeredUser) => {
+          // Guardar session storage
+          saveUser(registeredUser);
+
+          // Ocultar pantalla registro
+          pantallaRegistro.hide();
+
+          // Mostrar pantalla equipo
+          const pantallaEquipos = new PantallaEquipos(
+            document.querySelector("#equipos")
+          );
+          pantallaEquipos.show();
+
+          // Ocultar a los shapes
+
+          const shapes = document.querySelectorAll(".shape");
+          shapes.forEach((shape) => {
+            shape.style.display = "none";
+          });
+        });
+      } else {
+        if (email === "" || password === "") {
+          alert("Por favor, introduce un email y contraseña válidos.");
+        } else {
+          alert("Correo electrónico o contraseña incorrectos.");
+        }
+      }
+    }
+
+    //! FUNCION PARA REGISTRAR USUARIOS
 
     // function register() {
-    //   var newemail = document.getElementById("newemail").value;
-    //   var newPassword = document.getElementById("newPassword").value;
+    //   const newemail = document.getElementById("emailInput").value;
+    //   const newPassword = document.getElementById("passwordInput").value;
 
-    //   // Cargar usuarios desde el archivo JSON
-    //   fetch("users.json")
-    //     .then((response) => response.json())
-    //     .then((users) => {
-    //       // Verificar si el usuario ya existe
-    //       var existingUser = users.find((u) => u.email === newemail);
+    //   // Verificar si el usuario ya está registrado
+    //   const existingUser = dataUsers.find((u) => u.email === newemail);
 
-    //       if (existingUser) {
-    //         alert("El nombre de usuario ya está registrado");
-    //       } else {
-    //         // Agregar el nuevo usuario
-    //         var newUser = { email: newemail, password: newPassword };
-    //         users.push(newUser);
+    //   if (existingUser) {
+    //     alert("El correo electrónico ya está registrado");
+    //   } else {
+    //     // Agregar el nuevo usuario
+    //     const newUser = { email: newemail, password: newPassword };
+    //     dataUsers.push(newUser);
 
-    //         // Guardar los usuarios actualizados en el archivo JSON
-    //         saveUsers(users);
-
-    //         alert("Registro exitoso");
-    //       }
-    //     })
-    //     .catch((error) => console.error("Error al cargar usuarios:", error));
+    //     // Guardar los usuarios actualizados
+    //     saveUsers(dataUsers);
+    //     console.log(dataUsers);
+    //     alert("Registro exitoso");
+    //   }
     // }
 
     // function saveUsers(users) {
+    //   console.log("hola", users);
     //   // Guardar los usuarios en el archivo JSON
-    //   fetch("users.json", {
+    //   fetch(dataUsers, {
     //     method: "PUT",
     //     headers: {
     //       "Content-Type": "application/json",
@@ -101,30 +116,11 @@ async function initApp() {
     //     body: JSON.stringify(users),
     //   }).catch((error) => console.error("Error al guardar usuarios:", error));
     // }
+    // !.......................................................................................................................
   });
 
+  //? Mostrar la pantalla de registro
   pantallaRegistro.show();
-  //Una vez registrado, mostrar la pantalla de equipos
-  pantallaRegistro.getCreatedUser().then((registeredUser) => {
-    // Guardar session storage
-    saveUser(registeredUser);
-
-    // Ocultar pantalla registro
-    pantallaRegistro.hide();
-
-    // Mostrar pantalla equipo
-    const pantallaEquipos = new PantallaEquipos(
-      document.querySelector("#equipos")
-    );
-    pantallaEquipos.show();
-
-    // Ocultar a los shapes
-    
-    const shapes = document.querySelectorAll(".shape");
-    shapes.forEach((shape) => {
-      shape.style.display = "none";
-    });
-  });
 }
 
 initApp();

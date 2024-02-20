@@ -1,4 +1,10 @@
 [
-    { "email": "test@gmail.com", "password": "Bouazi123" },
-    { "username": "usuario2", "password": "contraseña2" }
+    {
+        "email": "test@gmail.com",
+        "password": "laliga024"
+    },
+    {
+        "email": "ayoub@gmail.com",
+        "password": "test123"
+    }
 ]
